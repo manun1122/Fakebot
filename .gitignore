@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.env
+
+# Project specific
+processed_otps.json
+sent_messages.json
+*.log
+
+# IDE
+.vscode/
+.idea/
