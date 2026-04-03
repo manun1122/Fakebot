@@ -1,12 +1,3 @@
-# 1. আপনার Fakebot রিপোজিটরি ক্লোন করুন
-git clone https://github.com/mamun1132/Fakebot.git
-cd Fakebot
-
-# 2. আগের সব ফাইল ডিলিট করুন (পুরনো ফাইল থাকলে)
-rm -rf *
-
-# 3. নতুন ফাইল তৈরি করুন
-cat > fake.py << 'EOF'
 #!/usr/bin/env python3
 """
 OTP Generator Bot - Telegram
@@ -342,46 +333,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-EOF
-
-# 4. requirements.txt তৈরি করুন
-echo "python-telegram-bot==20.7" > requirements.txt
-
-# 5. runtime.txt তৈরি করুন
-echo "python-3.11.11" > runtime.txt
-
-# 6. Procfile তৈরি করুন
-echo "worker: python fake.py" > Procfile
-
-# 7. .gitignore তৈরি করুন
-cat > .gitignore << 'EOF'
-__pycache__/
-*.pyc
-*.log
-processed_otps.json
-sent_messages.json
-.env
-venv/
-EOF
-
-# 8. README.md তৈরি করুন
-cat > README.md << 'EOF'
-# OTP Generator Bot
-
-Telegram bot that generates random OTPs.
-
-## Features
-- Random OTP every 8 seconds
-- Auto-delete after 30 minutes
-- 2 buttons: Main Channel & Number Bot
-
-## Deploy on Railway
-1. Push to GitHub
-2. Connect to Railway
-3. Deploy
-EOF
-
-# 9. গিটে যোগ করুন
-git add .
-git commit -m "Add complete OTP bot files"
-git push origin main
