@@ -1,17 +1,7 @@
-# Python
 __pycache__/
-*.py[cod]
-*.so
-.Python
-env/
-venv/
-.env
-
-# Project specific
+*.pyc
+*.log
 processed_otps.json
 sent_messages.json
-*.log
-
-# IDE
-.vscode/
-.idea/
+.env
+venv/
