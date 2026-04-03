@@ -1,1 +1,1 @@
-worker: python fake.py
+worker: python fakebot.py
