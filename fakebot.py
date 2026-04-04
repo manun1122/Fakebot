@@ -22,28 +22,149 @@ NUMBER_BOT_LINK = "https://t.me/Updateotpnew_bot"
 AUTO_DELETE_MINUTES = 30
 CLEANUP_INTERVAL_MINUTES = 30
 
+# ========== দেশের তালিকা ==========
 COUNTRIES = [
+    # ইউরোপ
     {'code': '358', 'name': 'Finland', 'flag': '🇫🇮'},
+    {'code': '44', 'name': 'United Kingdom', 'flag': '🇬🇧'},
+    {'code': '380', 'name': 'Ukraine', 'flag': '🇺🇦'},
+    {'code': '49', 'name': 'Germany', 'flag': '🇩🇪'},
+    {'code': '33', 'name': 'France', 'flag': '🇫🇷'},
+    {'code': '39', 'name': 'Italy', 'flag': '🇮🇹'},
+    {'code': '34', 'name': 'Spain', 'flag': '🇪🇸'},
+    {'code': '7', 'name': 'Russia', 'flag': '🇷🇺'},
+    {'code': '48', 'name': 'Poland', 'flag': '🇵🇱'},
+    {'code': '46', 'name': 'Sweden', 'flag': '🇸🇪'},
+    {'code': '47', 'name': 'Norway', 'flag': '🇳🇴'},
+    {'code': '45', 'name': 'Denmark', 'flag': '🇩🇰'},
+    {'code': '31', 'name': 'Netherlands', 'flag': '🇳🇱'},
+    {'code': '32', 'name': 'Belgium', 'flag': '🇧🇪'},
+    {'code': '41', 'name': 'Switzerland', 'flag': '🇨🇭'},
+    {'code': '43', 'name': 'Austria', 'flag': '🇦🇹'},
+    {'code': '351', 'name': 'Portugal', 'flag': '🇵🇹'},
+    {'code': '30', 'name': 'Greece', 'flag': '🇬🇷'},
+    {'code': '90', 'name': 'Turkey', 'flag': '🇹🇷'},
+    
+    # এশিয়া
     {'code': '977', 'name': 'Nepal', 'flag': '🇳🇵'},
+    {'code': '91', 'name': 'India', 'flag': '🇮🇳'},
+    {'code': '92', 'name': 'Pakistan', 'flag': '🇵🇰'},
+    {'code': '94', 'name': 'Sri Lanka', 'flag': '🇱🇰'},
+    {'code': '880', 'name': 'Bangladesh', 'flag': '🇧🇩'},
+    {'code': '60', 'name': 'Malaysia', 'flag': '🇲🇾'},
+    {'code': '62', 'name': 'Indonesia', 'flag': '🇮🇩'},
+    {'code': '63', 'name': 'Philippines', 'flag': '🇵🇭'},
+    {'code': '66', 'name': 'Thailand', 'flag': '🇹🇭'},
+    {'code': '84', 'name': 'Vietnam', 'flag': '🇻🇳'},
+    {'code': '82', 'name': 'South Korea', 'flag': '🇰🇷'},
+    {'code': '81', 'name': 'Japan', 'flag': '🇯🇵'},
+    {'code': '86', 'name': 'China', 'flag': '🇨🇳'},
+    {'code': '886', 'name': 'Taiwan', 'flag': '🇹🇼'},
+    {'code': '852', 'name': 'Hong Kong', 'flag': '🇭🇰'},
+    {'code': '65', 'name': 'Singapore', 'flag': '🇸🇬'},
+    
+    # আফ্রিকা
     {'code': '263', 'name': 'Zimbabwe', 'flag': '🇿🇼'},
     {'code': '218', 'name': 'Libya', 'flag': '🇱🇾'},
     {'code': '234', 'name': 'Nigeria', 'flag': '🇳🇬'},
-    {'code': '44', 'name': 'United Kingdom', 'flag': '🇬🇧'},
-    {'code': '380', 'name': 'Ukraine', 'flag': '🇺🇦'},
+    {'code': '27', 'name': 'South Africa', 'flag': '🇿🇦'},
+    {'code': '20', 'name': 'Egypt', 'flag': '🇪🇬'},
+    {'code': '212', 'name': 'Morocco', 'flag': '🇲🇦'},
+    {'code': '216', 'name': 'Tunisia', 'flag': '🇹🇳'},
+    {'code': '213', 'name': 'Algeria', 'flag': '🇩🇿'},
+    {'code': '254', 'name': 'Kenya', 'flag': '🇰🇪'},
+    {'code': '233', 'name': 'Ghana', 'flag': '🇬🇭'},
+    {'code': '251', 'name': 'Ethiopia', 'flag': '🇪🇹'},
+    {'code': '255', 'name': 'Tanzania', 'flag': '🇹🇿'},
+    {'code': '256', 'name': 'Uganda', 'flag': '🇺🇬'},
+    
+    # মধ্যপ্রাচ্য
+    {'code': '966', 'name': 'Saudi Arabia', 'flag': '🇸🇦'},
+    {'code': '971', 'name': 'UAE', 'flag': '🇦🇪'},
+    {'code': '974', 'name': 'Qatar', 'flag': '🇶🇦'},
+    {'code': '965', 'name': 'Kuwait', 'flag': '🇰🇼'},
+    {'code': '968', 'name': 'Oman', 'flag': '🇴🇲'},
+    {'code': '973', 'name': 'Bahrain', 'flag': '🇧🇭'},
+    {'code': '961', 'name': 'Lebanon', 'flag': '🇱🇧'},
+    {'code': '962', 'name': 'Jordan', 'flag': '🇯🇴'},
+    {'code': '964', 'name': 'Iraq', 'flag': '🇮🇶'},
+    {'code': '98', 'name': 'Iran', 'flag': '🇮🇷'},
+    {'code': '972', 'name': 'Israel', 'flag': '🇮🇱'},
+    
+    # আমেরিকা
+    {'code': '1', 'name': 'United States', 'flag': '🇺🇸'},
+    {'code': '1', 'name': 'Canada', 'flag': '🇨🇦'},
+    {'code': '52', 'name': 'Mexico', 'flag': '🇲🇽'},
+    {'code': '55', 'name': 'Brazil', 'flag': '🇧🇷'},
+    {'code': '54', 'name': 'Argentina', 'flag': '🇦🇷'},
+    {'code': '56', 'name': 'Chile', 'flag': '🇨🇱'},
+    {'code': '57', 'name': 'Colombia', 'flag': '🇨🇴'},
+    {'code': '51', 'name': 'Peru', 'flag': '🇵🇪'},
+    {'code': '58', 'name': 'Venezuela', 'flag': '🇻🇪'},
 ]
 
+# ========== প্ল্যাটফর্মের তালিকা (বর্ধিত) ==========
 PLATFORMS = {
+    # সোশ্যাল মিডিয়া
     'tiktok': {'icon': '🎬', 'name': 'TIKTOK'},
-    'microsoft': {'icon': '💻', 'name': 'MICROSOFT'},
+    'snapchat': {'icon': '👻', 'name': 'SNAPCHAT'},
+    'instagram': {'icon': '📸', 'name': 'INSTAGRAM'},
+    'facebook': {'icon': '📘', 'name': 'FACEBOOK'},
+    'twitter': {'icon': '🐦', 'name': 'TWITTER'},
+    'telegram': {'icon': '📨', 'name': 'TELEGRAM'},
+    'whatsapp': {'icon': '💚', 'name': 'WHATSAPP'},
     'signal': {'icon': '🔒', 'name': 'SIGNAL'},
+    'discord': {'icon': '🎮', 'name': 'DISCORD'},
+    'twitch': {'icon': '🎮', 'name': 'TWITCH'},
+    'viber': {'icon': '💜', 'name': 'VIBER'},
+    'wechat': {'icon': '💚', 'name': 'WECHAT'},
+    'line': {'icon': '💚', 'name': 'LINE'},
+    
+    # টেক কোম্পানি
+    'microsoft': {'icon': '💻', 'name': 'MICROSOFT'},
     'apple': {'icon': '🍎', 'name': 'APPLE'},
     'icloud': {'icon': '☁️', 'name': 'ICLOUD'},
-    'twitch': {'icon': '🎮', 'name': 'TWITCH'},
+    'google': {'icon': '🔴', 'name': 'GOOGLE'},
+    'yandex': {'icon': '🔵', 'name': 'YANDEX'},
+    'huawei': {'icon': '📱', 'name': 'HUAWEI'},
+    'samsung': {'icon': '📱', 'name': 'SAMSUNG'},
+    'adobe': {'icon': '🎨', 'name': 'ADOBE'},
+    
+    # ফাইন্যান্সিয়াল
+    'paypal': {'icon': '💰', 'name': 'PAYPAL'},
+    'binance': {'icon': '📊', 'name': 'BINANCE'},
+    'exness': {'icon': '📈', 'name': 'EXNESS'},
+    'remitly': {'icon': '💸', 'name': 'REMITLY'},
+    'moneygram': {'icon': '💵', 'name': 'MONEYGRAM'},
+    'wise': {'icon': '🌍', 'name': 'WISE'},
+    
+    # বেটিং ও গেমিং
+    '1xbet': {'icon': '🎲', 'name': '1XBET'},
+    'melbet': {'icon': '🎰', 'name': 'MELBET'},
+    'qnet': {'icon': '💎', 'name': 'QNET'},
+    
+    # সার্ভিসেস
     'truecaller': {'icon': '📞', 'name': 'TRUECALLER'},
-    'chameet': {'icon': '🐫', 'name': 'CHAMEET'},
-    'viber': {'icon': '💜', 'name': 'VIBER'},
-    'snapchat': {'icon': '👻', 'name': 'SNAPCHAT'},
-    'twilio': {'icon': '📡', 'name': 'TWILIO'},
+    'sinchverify': {'icon': '✅', 'name': 'SINCHVERIFY'},
+    'verimsg': {'icon': '📨', 'name': 'VERIMSG'},
+    'infosms': {'icon': '💬', 'name': 'INFOSMS'},
+    'procare': {'icon': '🏥', 'name': 'PROCARE'},
+    
+    # অ্যাপস
+    'yango': {'icon': '🚗', 'name': 'YANGO'},
+    'glovo': {'icon': '🛵', 'name': 'GLOVO'},
+    'indrive': {'icon': '🚙', 'name': 'INDRIVE'},
+    'heetch': {'icon': '🚘', 'name': 'HEETCH'},
+    'airbnb': {'icon': '🏠', 'name': 'AIRBNB'},
+    'ecorparis': {'icon': '🚲', 'name': 'ECOR PARIS'},
+    
+    # অন্যান্য
+    'spova': {'icon': '⭐', 'name': 'SPOVA'},
+    'oia': {'icon': '🔵', 'name': 'OIA'},
+    'wert': {'icon': '💎', 'name': 'WERT'},
+    'mfsafrica': {'icon': '🌍', 'name': 'MFS AFRICA'},
+    'cirad': {'icon': '🔬', 'name': 'CIRAD'},
+    'fintana': {'icon': '💰', 'name': 'FINTANA'},
 }
 
 DELAY_MIN = 5
@@ -63,8 +184,21 @@ class RandomOTPGenerator:
     
     @staticmethod
     def generate_phone_number(country_code):
-        lengths = {'358': 9, '977': 10, '263': 9, '218': 9, '234': 10, '44': 10, '380': 9}
-        length = lengths.get(country_code, 9)
+        # দেশ অনুযায়ী ফোন নাম্বারের দৈর্ঘ্য
+        lengths = {
+            '358': 9, '44': 10, '380': 9, '49': 11, '33': 9, '39': 10,
+            '34': 9, '7': 10, '48': 9, '46': 9, '47': 8, '45': 8,
+            '31': 9, '32': 9, '41': 9, '43': 10, '351': 9, '30': 10,
+            '90': 10, '977': 10, '91': 10, '92': 10, '94': 9, '880': 10,
+            '60': 9, '62': 10, '63': 10, '66': 9, '84': 9, '82': 10,
+            '81': 10, '86': 11, '886': 9, '852': 8, '65': 8, '263': 9,
+            '218': 9, '234': 10, '27': 9, '20': 10, '212': 9, '216': 8,
+            '213': 9, '254': 9, '233': 9, '251': 9, '255': 9, '256': 9,
+            '966': 9, '971': 9, '974': 8, '965': 8, '968': 8, '973': 8,
+            '961': 8, '962': 9, '964': 10, '98': 10, '972': 9, '1': 10,
+            '52': 10, '55': 11, '54': 10, '56': 9, '57': 10, '51': 9, '58': 10,
+        }
+        length = lengths.get(str(country_code), 9)
         number = ''.join([str(random.randint(0, 9)) for _ in range(length)])
         return f"{country_code}{number}"
     
@@ -95,12 +229,49 @@ class RandomOTPGenerator:
             'icloud': f"iCloud verification code: {otp_code}",
             'twitch': f"Twitch: Use code {otp_code} to verify your account",
             'truecaller': f"Truecaller code: {otp_code}",
-            'chameet': f"Chameet: Your verification code is {otp_code}",
-            'viber': f"Viber code: {otp_code}",
             'snapchat': f"Snapchat: Your verification code is {otp_code}",
-            'twilio': f"Twilio: Your verification code is {otp_code}",
+            'instagram': f"Instagram: Your code is {otp_code}",
+            'facebook': f"Facebook: Your verification code is {otp_code}",
+            'twitter': f"Twitter: Your code is {otp_code}",
+            'telegram': f"Telegram code: {otp_code}",
+            'whatsapp': f"WhatsApp code: {otp_code}",
+            'discord': f"Discord: Your verification code is {otp_code}",
+            'viber': f"Viber code: {otp_code}",
+            'wechat': f"WeChat: Your verification code is {otp_code}",
+            'line': f"LINE: Your code is {otp_code}",
+            'google': f"Google verification code: {otp_code}",
+            'yandex': f"Yandex: Your verification code is {otp_code}",
+            'huawei': f"Huawei: Your verification code is {otp_code}",
+            'samsung': f"Samsung account verification: {otp_code}",
+            'adobe': f"Adobe: Your verification code is {otp_code}",
+            'paypal': f"PayPal: Your code is {otp_code}",
+            'binance': f"Binance: Your verification code is {otp_code}",
+            'exness': f"Exness: Your verification code is {otp_code}",
+            'remitly': f"Remitly: Your verification code is {otp_code}",
+            'moneygram': f"MoneyGram: Your code is {otp_code}",
+            'wise': f"Wise: Your verification code is {otp_code}",
+            '1xbet': f"1xBet: Your verification code is {otp_code}",
+            'melbet': f"Melbet: Your verification code is {otp_code}",
+            'qnet': f"QNET: Your verification code is {otp_code}",
+            'sinchverify': f"SinchVerify: Your code is {otp_code}",
+            'verimsg': f"VERIMSG: Your verification code is {otp_code}",
+            'infosms': f"INFOSMS: Your code is {otp_code}",
+            'procare': f"ProCare: Your verification code is {otp_code}",
+            'yango': f"Yango: Your verification code is {otp_code}",
+            'glovo': f"Glovo: Your verification code is {otp_code}",
+            'indrive': f"inDrive: Your verification code is {otp_code}",
+            'heetch': f"Heetch: Your verification code is {otp_code}",
+            'airbnb': f"Airbnb: Your verification code is {otp_code}",
+            'ecorparis': f"Ecor Paris: Your verification code is {otp_code}",
+            'spova': f"Spova: Your verification code is {otp_code}",
+            'oia': f"OIA: Your verification code is {otp_code}",
+            'wert': f"Wert: Your verification code is {otp_code}",
+            'mfsafrica': f"MFS Africa: Your verification code is {otp_code}",
+            'cirad': f"Cirad: Your verification code is {otp_code}",
+            'fintana': f"Fintana: Your verification code is {otp_code}",
         }
-        return messages.get(platform.lower(), f"Your verification code is: {otp_code}")
+        base_msg = messages.get(platform.lower(), f"Your verification code is: {otp_code}")
+        return f"{base_msg}\nThis OTP will only be valid for 5 minutes. Please do not share your OTP with anyone."
     
     @staticmethod
     def generate_random_time():
@@ -145,6 +316,8 @@ class OTPBot:
         self.generator = RandomOTPGenerator()
         
         logger.info("🤖 OTP Generator Bot Initialized")
+        logger.info(f"🌍 Total Countries: {len(COUNTRIES)}")
+        logger.info(f"📱 Total Platforms: {len(PLATFORMS)}")
     
     def _load_processed_otps(self):
         try:
@@ -297,8 +470,8 @@ class OTPBot:
         print("\n" + "="*50)
         print("🤖 OTP GENERATOR BOT")
         print("="*50)
-        print(f"🌍 {len(COUNTRIES)} Countries")
-        print(f"📱 {len(PLATFORMS)} Platforms")
+        print(f"🌍 Total Countries: {len(COUNTRIES)}")
+        print(f"📱 Total Platforms: {len(PLATFORMS)}")
         print(f"⏱️ Delay: {DELAY_MIN}-{DELAY_MAX}s")
         print(f"⚡ Every: {GENERATION_INTERVAL}s")
         print(f"🗑️ Auto-delete: {AUTO_DELETE_MINUTES} min")
