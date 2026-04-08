@@ -22,6 +22,20 @@ NUMBER_BOT_LINK = "https://t.me/Updateotpnew_bot"
 AUTO_DELETE_MINUTES = 30
 CLEANUP_INTERVAL_MINUTES = 30
 
+# এলোমেলো ডিলে সময়ের তালিকা (সেকেন্ডে)
+DELAY_LIST = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+# ফোন নম্বর মাস্কিং কনফিগারেশন
+PHONE_PREFIX_LEN = 3
+PHONE_SUFFIX_LEN = 4
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+
 # ========== দেশের তালিকা ==========
 COUNTRIES = [
     # ইউরোপ
@@ -103,9 +117,8 @@ COUNTRIES = [
     {'code': '58', 'name': 'Venezuela', 'flag': '🇻🇪'},
 ]
 
-# ========== প্ল্যাটফর্মের তালিকা (বর্ধিত) ==========
+# ========== প্ল্যাটফর্মের তালিকা ==========
 PLATFORMS = {
-    # সোশ্যাল মিডিয়া
     'tiktok': {'icon': '🎬', 'name': 'TIKTOK'},
     'snapchat': {'icon': '👻', 'name': 'SNAPCHAT'},
     'instagram': {'icon': '📸', 'name': 'INSTAGRAM'},
@@ -119,8 +132,6 @@ PLATFORMS = {
     'viber': {'icon': '💜', 'name': 'VIBER'},
     'wechat': {'icon': '💚', 'name': 'WECHAT'},
     'line': {'icon': '💚', 'name': 'LINE'},
-    
-    # টেক কোম্পানি
     'microsoft': {'icon': '💻', 'name': 'MICROSOFT'},
     'apple': {'icon': '🍎', 'name': 'APPLE'},
     'icloud': {'icon': '☁️', 'name': 'ICLOUD'},
@@ -129,36 +140,26 @@ PLATFORMS = {
     'huawei': {'icon': '📱', 'name': 'HUAWEI'},
     'samsung': {'icon': '📱', 'name': 'SAMSUNG'},
     'adobe': {'icon': '🎨', 'name': 'ADOBE'},
-    
-    # ফাইন্যান্সিয়াল
     'paypal': {'icon': '💰', 'name': 'PAYPAL'},
     'binance': {'icon': '📊', 'name': 'BINANCE'},
     'exness': {'icon': '📈', 'name': 'EXNESS'},
     'remitly': {'icon': '💸', 'name': 'REMITLY'},
     'moneygram': {'icon': '💵', 'name': 'MONEYGRAM'},
     'wise': {'icon': '🌍', 'name': 'WISE'},
-    
-    # বেটিং ও গেমিং
     '1xbet': {'icon': '🎲', 'name': '1XBET'},
     'melbet': {'icon': '🎰', 'name': 'MELBET'},
     'qnet': {'icon': '💎', 'name': 'QNET'},
-    
-    # সার্ভিসেস
     'truecaller': {'icon': '📞', 'name': 'TRUECALLER'},
     'sinchverify': {'icon': '✅', 'name': 'SINCHVERIFY'},
     'verimsg': {'icon': '📨', 'name': 'VERIMSG'},
     'infosms': {'icon': '💬', 'name': 'INFOSMS'},
     'procare': {'icon': '🏥', 'name': 'PROCARE'},
-    
-    # অ্যাপস
     'yango': {'icon': '🚗', 'name': 'YANGO'},
     'glovo': {'icon': '🛵', 'name': 'GLOVO'},
     'indrive': {'icon': '🚙', 'name': 'INDRIVE'},
     'heetch': {'icon': '🚘', 'name': 'HEETCH'},
     'airbnb': {'icon': '🏠', 'name': 'AIRBNB'},
     'ecorparis': {'icon': '🚲', 'name': 'ECOR PARIS'},
-    
-    # অন্যান্য
     'spova': {'icon': '⭐', 'name': 'SPOVA'},
     'oia': {'icon': '🔵', 'name': 'OIA'},
     'wert': {'icon': '💎', 'name': 'WERT'},
@@ -166,18 +167,6 @@ PLATFORMS = {
     'cirad': {'icon': '🔬', 'name': 'CIRAD'},
     'fintana': {'icon': '💰', 'name': 'FINTANA'},
 }
-
-DELAY_MIN = 5
-DELAY_MAX = 10
-GENERATION_INTERVAL = 8
-PHONE_PREFIX_LEN = 4
-PHONE_SUFFIX_LEN = 5
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 
 class RandomOTPGenerator:
@@ -204,15 +193,30 @@ class RandomOTPGenerator:
     
     @staticmethod
     def mask_phone_number(phone_number):
+        """ফোন নম্বর মাস্ক করুন: দেশের কোড + প্রথম ৩ ডিজিট + *** + শেষ ৪ ডিজিট"""
         phone_str = str(phone_number)
         total_len = len(phone_str)
-        if total_len > (PHONE_PREFIX_LEN + PHONE_SUFFIX_LEN):
-            prefix = phone_str[:PHONE_PREFIX_LEN]
-            suffix = phone_str[-PHONE_SUFFIX_LEN:]
-            masked = prefix + "***" + suffix
+        
+        # দেশের কোড বের করুন (১-৪ ডিজিট)
+        country_code = ""
+        remaining = phone_str
+        for country in COUNTRIES:
+            if phone_str.startswith(str(country['code'])):
+                country_code = str(country['code'])
+                remaining = phone_str[len(country_code):]
+                break
+        
+        if not country_code:
+            country_code = phone_str[:3]
+            remaining = phone_str[3:]
+        
+        # মাস্কিং করুন
+        if len(remaining) >= 7:
+            masked = remaining[:3] + "***" + remaining[-4:]
         else:
-            masked = phone_str[:2] + "***" + phone_str[-2:]
-        return masked
+            masked = remaining[:2] + "***" + remaining[-2:]
+        
+        return f"{country_code}{masked}"
     
     @staticmethod
     def generate_otp_code():
@@ -220,67 +224,22 @@ class RandomOTPGenerator:
         return ''.join([str(random.randint(0, 9)) for _ in range(length)])
     
     @staticmethod
-    def generate_message(platform, otp_code):
-        messages = {
-            'tiktok': f"TikTok: Your verification code is {otp_code}",
-            'microsoft': f"Microsoft account verification code: {otp_code}",
-            'signal': f"Signal: Your code is {otp_code}",
-            'apple': f"Apple ID code: {otp_code}",
-            'icloud': f"iCloud verification code: {otp_code}",
-            'twitch': f"Twitch: Use code {otp_code} to verify your account",
-            'truecaller': f"Truecaller code: {otp_code}",
-            'snapchat': f"Snapchat: Your verification code is {otp_code}",
-            'instagram': f"Instagram: Your code is {otp_code}",
-            'facebook': f"Facebook: Your verification code is {otp_code}",
-            'twitter': f"Twitter: Your code is {otp_code}",
-            'telegram': f"Telegram code: {otp_code}",
-            'whatsapp': f"WhatsApp code: {otp_code}",
-            'discord': f"Discord: Your verification code is {otp_code}",
-            'viber': f"Viber code: {otp_code}",
-            'wechat': f"WeChat: Your verification code is {otp_code}",
-            'line': f"LINE: Your code is {otp_code}",
-            'google': f"Google verification code: {otp_code}",
-            'yandex': f"Yandex: Your verification code is {otp_code}",
-            'huawei': f"Huawei: Your verification code is {otp_code}",
-            'samsung': f"Samsung account verification: {otp_code}",
-            'adobe': f"Adobe: Your verification code is {otp_code}",
-            'paypal': f"PayPal: Your code is {otp_code}",
-            'binance': f"Binance: Your verification code is {otp_code}",
-            'exness': f"Exness: Your verification code is {otp_code}",
-            'remitly': f"Remitly: Your verification code is {otp_code}",
-            'moneygram': f"MoneyGram: Your code is {otp_code}",
-            'wise': f"Wise: Your verification code is {otp_code}",
-            '1xbet': f"1xBet: Your verification code is {otp_code}",
-            'melbet': f"Melbet: Your verification code is {otp_code}",
-            'qnet': f"QNET: Your verification code is {otp_code}",
-            'sinchverify': f"SinchVerify: Your code is {otp_code}",
-            'verimsg': f"VERIMSG: Your verification code is {otp_code}",
-            'infosms': f"INFOSMS: Your code is {otp_code}",
-            'procare': f"ProCare: Your verification code is {otp_code}",
-            'yango': f"Yango: Your verification code is {otp_code}",
-            'glovo': f"Glovo: Your verification code is {otp_code}",
-            'indrive': f"inDrive: Your verification code is {otp_code}",
-            'heetch': f"Heetch: Your verification code is {otp_code}",
-            'airbnb': f"Airbnb: Your verification code is {otp_code}",
-            'ecorparis': f"Ecor Paris: Your verification code is {otp_code}",
-            'spova': f"Spova: Your verification code is {otp_code}",
-            'oia': f"OIA: Your verification code is {otp_code}",
-            'wert': f"Wert: Your verification code is {otp_code}",
-            'mfsafrica': f"MFS Africa: Your verification code is {otp_code}",
-            'cirad': f"Cirad: Your verification code is {otp_code}",
-            'fintana': f"Fintana: Your verification code is {otp_code}",
-        }
-        base_msg = messages.get(platform.lower(), f"Your verification code is: {otp_code}")
-        return f"{base_msg}\nThis OTP will only be valid for 5 minutes. Please do not share your OTP with anyone."
+    def format_otp_with_dash(otp_code):
+        """OTP কোড ফরম্যাট করুন (যদি ৬ ডিজিট হয় তাহলে ৩ ডিজিট পর ড্যাশ)"""
+        if len(otp_code) == 6:
+            return f"{otp_code[:3]}-{otp_code[3:]}"
+        return otp_code
     
     @staticmethod
-    def generate_random_time():
-        hour = random.randint(0, 11)
-        minute = random.randint(0, 59)
-        second = random.randint(0, 59)
-        ampm = random.choice(['AM', 'PM'])
-        display_hour = 12 if hour == 0 else hour
-        return f"{display_hour}:{minute:02d}:{second:02d} {ampm}"
+    def generate_message(platform_name, otp_code):
+        """ওটিপি মেসেজ জেনারেট করুন (ইউজারের দেখানো ফরম্যাটে)"""
+        platform_upper = platform_name.upper()
+        formatted_otp = RandomOTPGenerator.format_otp_with_dash(otp_code)
+        
+        # বেস মেসেজ
+        message = f"💌Language - #English - Your {platform_upper} code {formatted_otp}\nDon't share this code with others"
+        
+        return message
     
     @staticmethod
     def generate_fake_otp_data():
@@ -292,10 +251,8 @@ class RandomOTPGenerator:
         masked_phone = RandomOTPGenerator.mask_phone_number(full_phone)
         otp_code = RandomOTPGenerator.generate_otp_code()
         message = RandomOTPGenerator.generate_message(platform_name, otp_code)
-        time_str = RandomOTPGenerator.generate_random_time()
         
         return {
-            'time': time_str,
             'full_phone': full_phone,
             'masked_phone': masked_phone,
             'country': country,
@@ -354,6 +311,35 @@ class OTPBot:
         except:
             pass
     
+    async def send_start_message(self):
+        """স্ক্রিপ্ট রান করার সাথে সাথেই স্টার্ট মেসেজ পাঠানো হবে"""
+        start_msg = """🚀 OTP Bot Started!
+
+✅ Bot is now active
+⏱️ New OTP Also
+━━━━━━━━━━━━━━━━━━━━
+⚡ Waiting for incoming OTPs...
+━━━━━━━━━━━━━━━━━━━━
+
+🤖 @updaterange"""
+        
+        keyboard = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("Main Channel", url=MAIN_CHANNEL_LINK),
+                InlineKeyboardButton("Number Bot", url=NUMBER_BOT_LINK)
+            ]
+        ])
+        
+        try:
+            await self.bot.send_message(
+                chat_id=GROUP_CHAT_ID,
+                text=start_msg,
+                reply_markup=keyboard
+            )
+            logger.info("✅ Start message sent to group!")
+        except Exception as e:
+            logger.error(f"Failed to send start message: {e}")
+    
     async def delete_old_messages(self):
         now = datetime.now()
         cutoff_time = now - timedelta(minutes=AUTO_DELETE_MINUTES)
@@ -401,9 +387,7 @@ class OTPBot:
             result = await self.bot.send_message(
                 chat_id=GROUP_CHAT_ID,
                 text=msg,
-                parse_mode="Markdown",
-                reply_markup=keyboard,
-                disable_web_page_preview=True
+                reply_markup=keyboard
             )
             
             self.sent_messages.append({
@@ -423,36 +407,34 @@ class OTPBot:
     async def send_random_otp(self):
         otp_data = self.generator.generate_fake_otp_data()
         
-        otp_id = f"{otp_data['time']}_{otp_data['full_phone']}_{otp_data['otp']}"
+        # ইউনিক আইডি তৈরি
+        otp_id = f"{otp_data['full_phone']}_{otp_data['otp']}"
         
         if otp_id in self.processed_otps:
             logger.info(f"⚠️ Duplicate OTP skipped")
             return False
         
-        delay = random.randint(DELAY_MIN, DELAY_MAX)
-        logger.info(f"⏳ Generated: {otp_data['country']['name']} - {otp_data['platform_name'].upper()}")
-        logger.info(f"⏰ Waiting {delay} seconds...")
+        # এলোমেলো ডিলে সিলেক্ট করুন (৫ থেকে ১৫ সেকেন্ডের মধ্যে)
+        delay = random.choice(DELAY_LIST)
+        logger.info(f"⏳ Generated: {otp_data['country']['flag']} {otp_data['country']['name']} - {otp_data['platform']['name']}")
+        logger.info(f"⏰ Waiting {delay} seconds before sending...")
         
         await asyncio.sleep(delay)
         
-        msg = f"""{otp_data['platform']['icon']} **New {otp_data['platform']['name']} OTP!**
-━━━━━━━━━━━━━━━━━━━━
-🌍 **Country:** {otp_data['country']['flag']} {otp_data['country']['name']}
-📱 **Phone:** `{otp_data['masked_phone']}`
-🕐 **Time:** `{otp_data['time']}`
+        # OTP মেসেজ ফরম্যাট (ইউজারের দেখানো স্টাইলে)
+        formatted_otp = self.generator.format_otp_with_dash(otp_data['otp'])
+        
+        msg = f"""{otp_data['country']['flag']}{otp_data['country']['name']} - #{otp_data['platform']['name']} - {otp_data['masked_phone']}
 
-🔐 **Code:** `{otp_data['otp']}`
-
-📝 **Message:**
 {otp_data['message']}
-━━━━━━━━━━━━━━━━━━━━
-🤖 @updaterange"""
+
+🔐{otp_data['otp']}"""
         
         if await self.send_telegram(msg):
             self.processed_otps.add(otp_id)
             self.total_otps_sent += 1
             self._save_processed_otps()
-            logger.info(f"✅ OTP #{self.total_otps_sent} sent! ({otp_data['otp']})")
+            logger.info(f"✅ OTP #{self.total_otps_sent} sent after {delay}s! ({otp_data['otp']})")
             return True
         
         return False
@@ -472,18 +454,21 @@ class OTPBot:
         print("="*50)
         print(f"🌍 Total Countries: {len(COUNTRIES)}")
         print(f"📱 Total Platforms: {len(PLATFORMS)}")
-        print(f"⏱️ Delay: {DELAY_MIN}-{DELAY_MAX}s")
-        print(f"⚡ Every: {GENERATION_INTERVAL}s")
+        print(f"⏱️ Random Delay: 5-15 seconds (varies per OTP)")
         print(f"🗑️ Auto-delete: {AUTO_DELETE_MINUTES} min")
         print("="*50)
         print("\n🚀 Bot is running...\n")
+        
+        # স্টার্ট মেসেজ পাঠান (সাথে সাথেই)
+        await self.send_start_message()
         
         cleanup_task = asyncio.create_task(self.cleanup_loop())
         
         while self.is_monitoring:
             try:
                 await self.send_random_otp()
-                await asyncio.sleep(GENERATION_INTERVAL)
+                # প্রতিটি OTP এর পর আর কোন ফিক্সড ডিলে নেই
+                # পরবর্তী OTP এর জন্য আবার এলোমেলো ডিলে হবে send_random_otp ফাংশনের ভিতরে
             except Exception as e:
                 logger.error(f"Generator error: {e}")
                 await asyncio.sleep(5)
